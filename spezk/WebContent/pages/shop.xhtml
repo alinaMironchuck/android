@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>#{msgs.userPage}</title>
+
+</h:head>
+
+<h:body>
+	<center>
+	<h1 style="color: #ff0000;">Radik and company</h1>
+	</center>
+	<h:form id="products">
+		<p:contextMenu for="table">
+			<p:menuitem value="Update" update="updateProduct"
+				process=":products:table" icon="ui-icon-search"
+				oncomplete="updateProduct.show()" />
+			<p:menuitem value="Delete" update="confirmation" icon="ui-icon-close"
+				oncomplete="confirmation.show()" />
+		</p:contextMenu>
+		<center><p:dataTable id="table"
+			value="#{productBean.products}" var="product"
+			rowKey="#{product.name}" selection="#{productBean.product}"
+			selectionMode="single" paginator="true" rows="10"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="10,20,50" style="width:90%">
+			<p:column>
+
+				<f:facet name="header">
+					<h:outputText value="name" />
+				</f:facet>
+				<h:outputText value="#{product.name}"></h:outputText>
+
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="description" />
+				</f:facet>
+				<h:outputText value="#{product.description}"></h:outputText>
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="price" />
+				</f:facet>
+				<h:outputText value="#{product.price}"></h:outputText>
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="number" />
+				</f:facet>
+				<h:outputText value="#{product.number}"></h:outputText>
+			</p:column>
+
+		</p:dataTable></center>
+		<p:dialog id="updateProduct" widgetVar="updateProduct" modal="true">
+
+			<h:panelGrid columns="2">
+            #{msgs.name}
+            <h:inputText value="#{productBean.name}" />
+			
+            #{msgs.description}
+            <p:inputText value="#{productBean.description}" />
+			
+            #{msgs.price}
+           <p:inputText value="#{productBean.price}" />
+			
+            #{msgs.number}
+            <p:spinner id="number" min="0" value="#{productBean.number}" />
+			
+			<p:commandButton value="Update"
+				update=":products:table,:add:addmessage"
+				oncomplete="updateProduct.hide()"
+				action="#{productBean.updateProduct}" />
+			<p:commandButton value="Cancel"
+				onclick="updateProduct.hide()" />
+</h:panelGrid>
+		</p:dialog>
+		<p:confirmDialog message="Are you sure you want to delete?"
+			id="confirmation" widgetVar="confirmation">
+			<p:commandButton id="confirm" value="Yes" update=":products:table"
+				oncomplete="confirmation.hide()"
+				action="#{productBean.deleteProduct}" />
+			<p:commandButton id="decline" value="Not"
+				onclick="confirmation.hide()" type="button" />
+		</p:confirmDialog>
+	</h:form>
+	<h:form id="add">
+		<center style="margin: 20px 0px 0px 0px"><h:panelGroup>
+            #{msgs.name}
+            <h:inputText value="#{productBean.name}"
+				validationMessage="too long">
+				<f:validateLength maximum="255" />
+			</h:inputText>
+		</h:panelGroup> <h:panelGroup>
+            #{msgs.description}
+            <p:inputText value="#{productBean.description}" />
+		</h:panelGroup> <h:panelGroup>
+            #{msgs.price}
+           <p:inputText value="#{productBean.price}">
+				<f:validateLongRange minimum="0" />
+			</p:inputText>
+		</h:panelGroup> <h:panelGroup>
+            #{msgs.number}
+            <p:spinner id="number" min="0" value="#{productBean.number}" />
+		</h:panelGroup> <p:commandButton action="#{productBean.addProduct}" value="add"
+			update=":products:table,addmessage" /> <p:messages id="addmessage"
+			showDetails="false" autoUpdate="true" /></center>
+	</h:form>
+</h:body>
+
+</html>

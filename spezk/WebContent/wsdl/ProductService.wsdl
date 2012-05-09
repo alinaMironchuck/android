@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservice.spezkurs.bsu.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webservice.spezkurs.bsu.com" xmlns:intf="http://webservice.spezkurs.bsu.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://webservice.spezkurs.bsu.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getProducts">
+    <complexType/>
+   </element>
+   <element name="getProductsResponse">
+    <complexType>
+     <sequence>
+      <element name="getProductsReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="buySelected">
+    <complexType>
+     <sequence>
+      <element name="id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="buySelectedResponse">
+    <complexType>
+     <sequence>
+      <element name="buySelectedReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="buySelectedResponse">
+
+      <wsdl:part element="impl:buySelectedResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="buySelectedRequest">
+
+      <wsdl:part element="impl:buySelected" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProductsRequest">
+
+      <wsdl:part element="impl:getProducts" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProductsResponse">
+
+      <wsdl:part element="impl:getProductsResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ProductService">
+
+      <wsdl:operation name="getProducts">
+
+         <wsdl:input message="impl:getProductsRequest" name="getProductsRequest"/>
+
+         <wsdl:output message="impl:getProductsResponse" name="getProductsResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="buySelected">
+
+         <wsdl:input message="impl:buySelectedRequest" name="buySelectedRequest"/>
+
+         <wsdl:output message="impl:buySelectedResponse" name="buySelectedResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ProductServiceSoapBinding" type="impl:ProductService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getProducts">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProductsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProductsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="buySelected">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="buySelectedRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="buySelectedResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ProductServiceService">
+
+      <wsdl:port binding="impl:ProductServiceSoapBinding" name="ProductService">
+
+         <wsdlsoap:address location="http://localhost:8080/spezk/services/ProductService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
